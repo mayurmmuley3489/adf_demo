@@ -1,0 +1,9 @@
+{
+	"name": "mayurmmuley-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4617d019-d43c-487b-aa1e-42e1a72860c0",
+		"tenantId": "288b20e1-ac24-44cc-9087-794c89197290"
+	}
+}
