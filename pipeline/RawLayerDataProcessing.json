@@ -24,7 +24,7 @@
 								"value": "@formatDateTime(utcnow(),'yyyyMMdd')",
 								"type": "Expression"
 							},
-							"wildcardFileName": "*",
+							"wildcardFileName": "*JPN*",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
