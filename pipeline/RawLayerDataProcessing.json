@@ -101,6 +101,174 @@
 						"type": "DelimitedTextReadSettings"
 					}
 				}
+			},
+			{
+				"name": "Run validations on copied JPN files",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata of JPN files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/test/test_validations",
+					"baseParameters": {
+						"received_files": {
+							"value": "@activity('Get Metadata of JPN files').output",
+							"type": "Expression"
+						},
+						"IS_update": "JPN"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "Ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Copy EUR files from source to Raw",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@formatDateTime(utcnow(),'yyyyMMdd')",
+								"type": "Expression"
+							},
+							"wildcardFileName": "*EUR*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureBlobStorageCsv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ADLSGen2Csv",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Get Metadata of EUR files",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "Copy EUR files from source to Raw",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ADLSGen2Csv",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "Run validations on copied EUR files",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata of EUR files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/test/test_validations",
+					"baseParameters": {
+						"received_files": {
+							"value": "@activity('Get Metadata of EUR files').output",
+							"type": "Expression"
+						},
+						"IS_update": "EUR"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "Ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []
