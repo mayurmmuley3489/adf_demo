@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "RawLayerDataProcessing",
 	"properties": {
 		"activities": [
 			{
@@ -20,6 +20,10 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@formatDateTime(utcnow(),'yyyyMMdd')",
+								"type": "Expression"
+							},
 							"wildcardFileName": "*",
 							"enablePartitionDiscovery": false
 						},
@@ -50,13 +54,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "csv_blob",
+						"referenceName": "AzureBlobStorageCsv",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "csv_gen2",
+						"referenceName": "ADLSGen2",
 						"type": "DatasetReference"
 					}
 				]
@@ -90,6 +94,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
