@@ -126,7 +126,7 @@
 					"baseParameters": {
 						"IS_update": "JPN",
 						"received_files": {
-							"value": "string(@activity('Get Metadata of JPN files').output.childItems)",
+							"value": "@activity('Get Metadata of JPN files').output",
 							"type": "Expression"
 						}
 					}
@@ -259,7 +259,7 @@
 					"notebookPath": "/test/test_validations",
 					"baseParameters": {
 						"received_files": {
-							"value": "string(@activity('Get Metadata of EUR files').output.childItems)",
+							"value": "@activity('Get Metadata of EUR files').output",
 							"type": "Expression"
 						},
 						"IS_update": "EUR"
