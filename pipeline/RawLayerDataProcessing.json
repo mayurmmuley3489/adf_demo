@@ -60,7 +60,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ADLSGen2",
+						"referenceName": "ADLSGen2Csv",
 						"type": "DatasetReference"
 					}
 				]
