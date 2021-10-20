@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy JPN files from source to Raw",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -66,11 +66,11 @@
 				]
 			},
 			{
-				"name": "Get Metadata1",
+				"name": "Get Metadata of JPN files",
 				"type": "GetMetadata",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "Copy JPN files from source to Raw",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -86,7 +86,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "archiveFolder",
+						"referenceName": "ADLSGen2Csv",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
