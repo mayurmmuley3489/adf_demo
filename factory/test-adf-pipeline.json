@@ -1,0 +1,9 @@
+{
+	"name": "test-adf-pipeline",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "73ab3068-a134-4fc9-b628-c0625301e095",
+		"tenantId": "1b9ef6d1-c996-4b8f-9741-999e0fb93ee1"
+	}
+}
